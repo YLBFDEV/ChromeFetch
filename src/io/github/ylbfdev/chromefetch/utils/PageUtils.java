@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import io.github.ylbfdev.chromefetch.constants.Constants;
@@ -23,7 +24,10 @@ public class PageUtils {
 
 	public static WebDriver getWebDriver() {
 		WebDriver driver;
-		if (Constants.WEB_DRIVER.equals("chrome")) {
+		if (Constants.WEB_DRIVER.equals("htmlunit")) {
+			driver = new HtmlUnitDriver();
+			return driver;
+		} else if (Constants.WEB_DRIVER.equals("chrome")) {
 			ChromeDriverService service = new ChromeDriverService.Builder()
 					.usingDriverExecutable(new File(Constants.DRIVER_PATH)).usingAnyFreePort().build();
 			try {
@@ -33,8 +37,7 @@ public class PageUtils {
 			}
 			// 设置 chrome 的路径
 			// 下载镜像地址http://npm.taobao.org/mirrors/chromedriver
-			 System.setProperty(Constants.CHROME_DRIVER_KEY,
-			 Constants.DRIVER_PATH);
+			System.setProperty(Constants.CHROME_DRIVER_KEY, Constants.DRIVER_PATH);
 			driver = new ChromeDriver();
 			return driver;
 		} else if (Constants.WEB_DRIVER.equals("firefox")) {

@@ -13,10 +13,11 @@ public class FetchXunLeiMi extends BaseFetch {
 	@Override
 	public void startFetch(WebDriver driver) {
 		driver.get("http://www.xunleimi.com/huayudianshiju/27806/");
+		Log.info(driver.getTitle());
 		List<WebElement> driverElements = driver.findElements(By.cssSelector("#xun1 > table > tbody > tr > td > a"));
 		for (WebElement webElement : driverElements) {
 			String down_url = webElement.getAttribute("href");
-			String file_name = webElement.getAttribute("mc");
+			String file_name = webElement.getText();
 			Log.info(file_name + "\t,\t" + down_url);
 		}
 	}

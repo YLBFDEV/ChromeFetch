@@ -12,16 +12,22 @@ public class FetchSglsGameActivitys extends BaseFetch {
 
 	@Override
 	public void startFetch(WebDriver driver) {
-		driver.get("http://bbs.open.qq.com/forum-3109-1.html");
-		int totalPage = 75;
+		driver.get("http://bbs.open.qq.com/forum-3109-78.html");
+		Log.info(driver.getTitle());
+		String pageStr = driver.findElement(By.cssSelector("#fd_page_top > div > label > span")).getAttribute("title");
+		Log.info(pageStr);
+		int totalPage = Integer.parseInt(pageStr.replaceAll("[^0-9]", ""));
 		for (int i = 0; i < totalPage; i++) {
+			Log.info(driver.getCurrentUrl());
 			List<WebElement> driverElements = driver
 					.findElements(By.cssSelector("#moderate > table >tbody > tr > th > a"));
 			for (WebElement webElement : driverElements) {
 				if (webElement.getText().contains("活动"))
 					Log.info(webElement.getText());
 			}
-			driver.findElement(By.cssSelector("#fd_page_top > div > a.nxt")).click();
+			if (totalPage - 1 != i) {
+				driver.findElement(By.cssSelector("#fd_page_top > div > a.nxt")).click();
+			}
 		}
 	}
 }

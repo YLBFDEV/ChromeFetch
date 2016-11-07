@@ -13,8 +13,11 @@ public class Fetch520HD extends BaseFetch {
 	@Override
 	public void startFetch(WebDriver driver) {
 		driver.get("http://www.520hd.cc/view/play61837.html");
+		Log.info(driver.getTitle());
 		List<WebElement> driverElements = driver
-				.findElements(By.cssSelector("#detail-list > div > div.down_list.max-height > ul > li"));
+				.findElements(By.cssSelector("#detail-list > div > div > ul > li"));
+		Log.info(driverElements.size());
+
 		for (WebElement webElement : driverElements) {
 			String down_url = webElement.findElement(By.className("down_url")).getAttribute("value");
 			String file_name = webElement.findElement(By.className("down_url")).getAttribute("file_name");
